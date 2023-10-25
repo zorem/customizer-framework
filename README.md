@@ -15,11 +15,11 @@ You can simply copy the files in your plugin and then include the main plugin fi
 Go to the Github and download the zip file OR clone the repository from Git.
 
 ### where its located in Git
-<p>// Clone this repo into your own directory.<br><code>git clone https://github.com/kuldip-navadiya/customizer-framework.git</code></p>
+<code>git clone https://github.com/kuldip-navadiya/customizer-framework.git  // Clone this repo into your own directory.</code>
 
 After, clone this repo into your own directory and you will see in directory <code>customizer</code> folder in your plugin folder is created.
-<p>OR</p>
-<p>// Download this repo from the link.<br><code>https://github.com/kuldip-navadiya/customizer-framework/archive/refs/heads/main.zip</code></p>
+<b>OR</b>
+<code>https://github.com/kuldip-navadiya/customizer-framework/archive/refs/heads/main.zip // Download this repo from the link.</code>
 
 After, Download this repo from the link. you need to unzip this zip file and copy the <code>customizer</code> folder in your plugin.
 
