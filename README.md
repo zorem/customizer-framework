@@ -23,7 +23,7 @@ After, clone this repo into your own directory and you will see in directory <co
 
 After, Download this repo from the link. you need to unzip this zip file and copy the <code>customizer</code> folder in your plugin.
 
-Then, Add the following code to include the main plugin file in your plugin's.
+Then, Add the following code to include in the main plugin file of your plugin's.
 
 <pre><code>
   //Hooks
