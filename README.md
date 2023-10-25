@@ -18,7 +18,7 @@ Go to the Github and download the zip file OR clone the repository from Git.
 <p>// Clone this repo into your own directory.<br><code>git clone https://github.com/kuldip-navadiya/customizer-framework.git</code></p>
 
 After, clone this repo into your own directory and you will see in directory <code>customizer</code> folder in your plugin folder is created.
-
+<p>OR</p>
 <p>// Download this repo from the link.<br><code>https://github.com/kuldip-navadiya/customizer-framework/archive/refs/heads/main.zip</code></p>
 
 After, Download this repo from the link. you need to unzip this zip file and copy the <code>customizer</code> folder in your plugin.
