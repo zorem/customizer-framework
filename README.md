@@ -15,11 +15,11 @@ You can simply copy the files in your plugin and then include the main plugin fi
 Go to the Github and download the zip file OR clone the repository from Git.
 
 ### where its located in Git
-<p>// Clone this repo into your own directory.<br><code>git clone <a href="mailto:git@github.com">git@github.com</a>:zorem/customizer-framework.git</code></p>
+<p>// Clone this repo into your own directory.<br><code>git clone https://github.com/kuldip-navadiya/customizer-framework.git</code></p>
 
 After, clone this repo into your own directory and you will see in directory <code>customizer</code> folder in your plugin folder is created.
 
-<p>// Download this repo from the link.<br><code>[https://github.com/zorem/customizer-framework/archive/refs/heads/main.zip](https://github.com/kuldip-navadiya/customizer-framework/archive/refs/heads/main.zip)</code></p>
+<p>// Download this repo from the link.<br><code>https://github.com/kuldip-navadiya/customizer-framework/archive/refs/heads/main.zip</code></p>
 
 After, Download this repo from the link. you need to unzip this zip file and copy the <code>customizer</code> folder in your plugin.
 
