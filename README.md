@@ -6,6 +6,7 @@ The Customizer framework is a great tool to add options to your plugin so users 
 
 - [Installation](#installation)
 - [Configuration](#configuration)
+- [Adding Panels & Sections](#panels-sections)
 - [Adding Fields](#adding-fields)
 - [Examples](#examples)
 
@@ -85,4 +86,6 @@ apply_filters(  self::$screen_id . '_email_options' , $settings = array(), $prev
 apply_filters( self::$screen_id . '_preview_content' , $preview );	// Parameter $preview = 'preview id'
 </code></pre>
 
-## Adding fields
+## Adding Panel & Sections
+
+## Adding Fields
