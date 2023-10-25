@@ -6,7 +6,7 @@ The Customizer framework is a great tool to add options to your plugin so users 
 
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Panels & Controls](#panels-sections)
+- [Panels & Controls](#panels--sections)
 - [Adding Controls](#adding-controls)
 
 ## Installation
