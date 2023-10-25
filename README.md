@@ -53,3 +53,39 @@ Then, Add the following code to include in the main plugin file of your plugin's
     return $this->plugin_path;
   }
 </code></pre>
+
+## Configuration
+To configure customizer framework, we're going to path <code>your-pluign-folder/customizer/customizer-admin.php</code> and open PHP-file in your plugin. This file will contain all the controls and the basic configuration.
+
+After, Open <code>customizer-admin.php</code> file and chnage '$screen_id' and '$screen_title' as per your admin page.
+
+<code>private static $screen_id = 'customizer_framework'; // Enter your admin page id</code> 
+<code>private static $screen_title = 'Customizer Framework'; // Enter your customizer title</code>
+
+Then, please set below localize script parameter as per requirment
+
+<code><pre>
+  wp_localize_script( self::$screen_id, self::$screen_id, array(
+			'main_title'	=> self::$screen_title, // Customizer main title
+			'admin_email' => get_option('admin_email'), // Admin email address
+			'send_test_email_btn' => true, // Show/Hide a send test email button in framework
+			'iframeUrl'	=> apply_filters(  self::$screen_id . '_iframeUrls' , array(
+					'processing_lp' => admin_url('admin-ajax.php?action=' . self::$screen_id . '_email_preview&preview=processing_lp'),
+				), self::$screen_id ), // Preview irameURL as order status and preview id
+				'back_to_wordpress_link' => admin_url(), // redirect after close customizer framework
+				'rest_nonce'	=> wp_create_nonce('wp_rest'), // Nonce for security perpose
+				'rest_base'	=> esc_url_raw( rest_url() ), // Rest base URL for API
+			));
+</pre></code>
+
+Then, Use filter hooks to add controls and preview.
+
+<code>
+// hooks for return settings options
+apply_filters(  self::$screen_id . '_email_options' , $settings = array(), $preview ); // Parameter $setting and $preview = 'preview id'
+
+// hooks for return Preview content
+apply_filters( self::$screen_id . '_preview_content' , $preview ); // Parameter $preview = 'preview id'
+</code>
+
+
