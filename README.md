@@ -10,19 +10,27 @@ The Customizer framework is a great tool to add options to your plugin so users 
 - [Adding Controls](#adding-controls)
 
 ## Installation
-You can simply copy the files in your plugin and then include the main plugin file.
+You can easily incorporate the files from this repository into your plugin by following these steps:
 
-Go to the Github and download the zip file OR clone the repository from Git.
+First, you have the option to either download the repository as a zip file or clone it from Git. Here are the instructions for both methods:
 
-### where its located in Git
-<pre><code>git clone https://github.com/kuldip-navadiya/customizer-framework.git  // Clone this repo into your own directory.</code></pre>
-After, clone this repo into your own directory and you will see in directory `customizer` folder in your plugin folder is created.
-<p><strong>OR</strong></p>
-<pre><code>https://github.com/kuldip-navadiya/customizer-framework/archive/refs/heads/main.zip // Download this repo from the link.</code></pre>
+**1. To Clone the Repository:**
 
-After, Download this repo from the link. you need to unzip this zip file and copy the `customizer` folder in your plugin.
+Navigate to the Git repository using the following command:
 
-Then, Add the following code to include in the main plugin file of your plugin's.
+<pre><code>git clone https://github.com/kuldip-navadiya/customizer-framework.git</code></pre>
+
+This command will clone the repository into your designated directory. You will find a `customizer` folder inside your plugin directory.
+
+**2. Alternatively, To Download the Zip File:**
+
+You can also download the repository as a zip file by visiting the following link:
+[Download Zip](https://github.com/kuldip-navadiya/customizer-framework/archive/refs/heads/main.zip)
+
+Once downloaded, unzip the zip file, and you will find the 'customizer' folder. Copy this folder into your plugin directory.
+
+After adding the necessary files to your plugin, you should include the following code in the main plugin file to enable the customizer functionality:
+
 <pre><code>
 //Hooks
 add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
@@ -51,15 +59,19 @@ public function get_plugin_path() {
 }
 </code></pre>
 
+By including this code in your main plugin file, you ensure that the customizer functionality is integrated into your plugin. This allows you to utilize the features provided by the 'customizer-admin.php' file located in the 'customizer' folder you added to your plugin directory.
+
 ## Configuration
-To configure customizer framework, we're going to path `your-pluign-folder/customizer/customizer-admin.php` and open PHP-file in your plugin. This file will contain all the controls and the basic configuration.
+Locate the customizer configuration file in your plugin folder. You can find it at `your-plugin-folder/customizer/customizer-admin.php`. Open this PHP file in your plugin directory, as it contains all the controls and basic configuration settings.
 
-After, Open `customizer-admin.php` file and chnage `$screen_id` and `$screen_title` as per your admin page.
+Within the `customizer-admin.php` file, you'll need to make a couple of changes to customize it for your specific admin page:
 
-<pre><code>private static $screen_id = 'customizer_framework'; // Enter your admin page id</code></pre><br>
-<pre><code>private static $screen_title = 'Customizer Framework'; // Enter your customizer title</code></pre>
+<pre><code>private static $screen_id = 'customizer_framework';<br>
+private static $screen_title = 'Customizer Framework';</code></pre>
 
-Then, please set below localize script parameter as per requirment
+Replace `customizer_framework` and `Customizer Framework` with your desired admin page ID and customizer title.
+
+Next, you should set the following localized script parameters according to your requirements:
 <pre><code>
 wp_localize_script( self::$screen_id, self::$screen_id, array(
 	'main_title'	=> self::$screen_title,		// Customizer main title
@@ -72,52 +84,60 @@ wp_localize_script( self::$screen_id, self::$screen_id, array(
 ));
 </code></pre>
 
-Then, Use filter hooks to add controls and preview.
-<pre><code>
-// hooks for return settings options
-apply_filters(  self::$screen_id . '_email_options' , $settings = array(), $preview );	// Parameter $setting and $preview = 'preview id'
+These settings allow you to customize various aspects of your customizer framework, such as the main title, admin email address, the presence of a test email button, iframe URLs, redirection link, and security features.
 
-// hooks for return Preview content
-apply_filters( self::$screen_id . '_preview_content' , $preview );	// Parameter $preview = 'preview id'
-</code></pre>
+Finally, use filter hooks to add controls and preview content to your customizer:
+> For returning settings options:
+<pre><code>apply_filters(  self::$screen_id . '_email_options' , $settings = array(), $preview );</code></pre>
+> For returning preview content:
+<pre><code>apply_filters( self::$screen_id . '_preview_content' , $preview );</code></pre>
+
+These filter hooks allow you to define and customize the settings and preview content for your customizer framework.
+
+By following these steps, you can configure the Customizer Framework to suit your specific needs and preferences.
 
 ## Panels and Controls
-Panels are wrappers for sections – a way to group multiple sections together. To see how to create Panels using the Customizer framework.
+Panels serve as containers for grouping multiple sections together in the Customizer framework. Let's explore how to create panels in the Customizer and the arguments required when registering them.
 
-All arguments such as title, type should be passed directly when registering a panels.
+### Creating Panels:
+To create panels, you need to provide arguments such as the panel ID, title, and type when registering them. Here's how you can do it:
 
-> *Arguments:*<br>
-	- **panel1** - the *panel1* as panel ID<br>
-	- **Title:** - the *title* as Panel name<br>
-	- **Type:** - the *type* as panel type(like: panel, sub-panel)
+**Arguments:**<br>
+- `panel_id` : The unique identifier for the panel.<br>
+- `Title` : The display name of the panel.<br>
+- `Type` : The type of the panel, which can be either "panel" or "sub-panel."
 
-Adding Panels in customizer:
-<pre><code>
-//panels
-'panel1' => array(
-	'title'	=> esc_html__( 'Panel 1', 'text-domian' ),
+Here's an example of adding panels in the Customizer:
+<pre><code>//panels
+'panel_id' => array(
+	'title'	=> esc_html__( 'Panel Name', 'text-domian' ),
 	'type'	=> 'panel',
 ),
 </code></pre>
+Panels are useful for organizing and categorizing sections within the Customizer.
 
-Sub Panels are wrappers for sections – a way to group multiple sections together. To see how to create Sub Panels using the Customizer framework.
+### Creating Sub-Panels:
+Sub-panels, on the other hand, are wrappers for grouping multiple sections within a panel. To create sub-panels using the Customizer framework, you need to provide arguments like title, type, and the parent panel ID when registering them.
 
-All arguments such as title, type and parent should be passed directly when registering a sub panels.
+**Arguments:**<br>
+- `sub-panel1` : The unique identifier for the sub-panel.<br>
+- `Title` : The display name of the sub-panel.<br>
+- `Type` : The type of the sub-panel, which can be "panel" or "sub-panel."<br>
+- `parent` : The parent panel ID to which the sub-panel belongs, typically referencing a panel's ID.
 
-> *Arguments:*<br>
-	- **sub-panel1** - the *sub-panel1* as sub panel ID<br>
-	- **Title:** - the *title* as Panel name<br>
-	- **Type:** - the *type* as panel type(like: panel, sub-panel)<br>
-	- **parent:** - the *parent* as panel ID(like: panel1)
-
-Adding Sub Panels in customizer:
-<pre><code>
-//sub-panels
+Here's an example of adding sub-panels in the Customizer:
+<pre><code>//sub-panels
 'sub-panel1' => array(
-	'title'		=> esc_html__( 'Sub Panel 1', 'text-domian' ),
+	'title'		=> esc_html__( 'Sub Panel Name', 'text-domian' ),
 	'type'		=> 'sub-panel',
-	'parent'	=> 'panel1',
+	'parent'	=> 'panel_id',
 ),
 </code></pre>
 
+Sub-panels are beneficial when you want to further structure and organize sections within a specific panel.
+
+In summary, panels are used to group sections together in the Customizer, and sub-panels allow you to create an additional level of organization within a panel by grouping related sections. When registering panels and sub-panels, make sure to define the necessary arguments such as the unique IDs, titles, types, and parent panel references as needed for your specific customization requirements.
+
 ## Adding Controls
+
+
