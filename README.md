@@ -6,6 +6,7 @@ The Customizer framework is a great tool to add options to your plugin so users 
 
 - [Installation](#installation)
 - [Configuration](#configuration)
+- [Header Controls](#header-controls)
 - [Panels and Controls](#panels-and-controls)
 - [Adding Controls](#adding-controls)
 
@@ -91,6 +92,46 @@ Finally, use filter hooks to add controls and preview content to your customizer
 These filter hooks allow you to define and customize the settings and preview content for your customizer framework.
 
 By following these steps, you can configure the Customizer Framework to suit your specific needs and preferences.
+## Header Controls
+To add header controls, you need to provide arguments such as the title, previewType, default and type and nav when registering them.
+
+> [!NOTE]
+> When you registering them you need to pass all controls code inside setting variable in filter hook and return it.
+
+**Arguments:**<br>
+- `previewType` : Use the value 'true' to update the preview content on change email type.<br>
+- `nav` : The nav is position of header.<br>
+- `options` : The array of the previews list"
+- `parent` : This argument refers to the parent panel or sub-panel ID to which the control belongs. It typically points to the ID of the panel to which the control is attached.
+- `show` : Use the value 'true' to indicate that the field should be displayed.
+- `option_type` : Set this to 'array' if you want to store the option value in an array with a key based on the ID.
+- `unique_key` : The unique key is employed to store the option value when the `option_name` and `option_key` arguments are not provided.
+- `default` : Use the value to set default when  user come first time on customizer.
+- `type` : This argument refers to the type of field or option
+
+<pre><code>//Header Controls
+'email_type' => array(
+	'type'     => 'select',
+	'options'  => array(
+		'preview1'  => 'Preview 1',
+		'preview2'  => 'Preview 2',
+	),
+	'show'     => true,
+	'previewType' => true,
+	'nav' => 'header',
+	'default'  => $preview ? $preview : '',
+),
+'email_enable' => array(
+	'title'    => esc_html__( 'Enable email', 'text-domian' ),
+	'type'     => 'tgl-btn',
+	'show'		=> true,
+	'nav' => 'header',
+	'option_name' => 'unique_id',
+	'option_type' => 'array',
+	'default'	=> !empty(value) ? value : 1,
+	'class'	=> 'align-right',
+),
+</code></pre>
 
 ## Panels and Controls
 Panels serve as containers for grouping multiple sections together in the Customizer framework. Let's explore how to create panels in the Customizer and the arguments required when registering them.
@@ -212,7 +253,7 @@ The `Text` controls allow you to add a simple, single-line text input.
 ),</code></pre>
 
 ### Toggle
-![image](https://github.com/zorem/customizer-framework/assets/69037744/dae878ce-8477-4a82-af2b-d36ad823a0a8)
+![image](https://github.com/zorem/customizer-framework/assets/69037744/deb080c6-a0db-46d6-ab85-40183c9060fb)
 
 **Example**
 <pre><code>'unique_key' => array(
@@ -248,8 +289,101 @@ The `Text` controls allow you to add a simple, single-line text input.
 	'parent'=> 'panel_id',
 	'title'    => esc_html__( 'Color control', 'text-domian' ),
 	'default'  => !empty(value) ? value : #000,
-	'type'     => 'checkbox',
+	'type'     => 'color',
 	'show'     => true,
 	'option_name'=> 'unique_id',
 	'option_type'=> 'array',
+),</code></pre>
+
+
+### Tags Input
+![image](https://github.com/zorem/customizer-framework/assets/69037744/b7409806-e5f2-4e2e-a48e-153f69cd6b64)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Tags Input control', 'text-domian' ),
+	'default'  => !empty(value) ? value : '',
+	'type'     => 'tags-input',
+	'show'     => true,
+	'option_name'=> 'unique_id',
+	'option_type'=> 'array',
+),</code></pre>
+
+### Codeinfo
+![image](https://github.com/zorem/customizer-framework/assets/69037744/1e871725-188a-4d19-89ce-173d80b85db8)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Available Placeholder:', 'text-domian' ),
+	'default'  => '{customer_first_name}<br>{customer_last_name}<br>{site_title}<br>{order_number}',
+	'type'     => 'codeinfo',
+	'show'     => true,
+),</code></pre>
+
+### Upload Image Control
+![image](https://github.com/zorem/customizer-framework/assets/69037744/b9793b8e-c046-4e20-8f6b-08f3fcabfa47)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Upload Image Control', 'text-domian' ),
+	'type'     => 'media',
+	'show'     => true,
+	'option_name'=> 'unique_id',
+	'option_type' => 'array',
+	'desc'     => esc_html( 'image size requirements: 200px/40px.', 'sales-report-email-pro' ),
+	'default'	=> ''
+),</code></pre>
+
+
+### Radio
+![image](https://github.com/zorem/customizer-framework/assets/69037744/bc1a5e85-20a6-458f-b06c-1c95380aa358)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Radio Control', 'text-domian' ),
+	'type'     => 'radio',
+	'show'     => true,
+	'option_name'=> 'unique_id',
+	'option_type' => 'array',
+	'choices'  => array(
+		'2colums' => '2 Columns',
+		'1colums' => '1 Column'
+	),	
+	'default' => !empty(value) ? value : '2colums',
+),</code></pre>
+
+### Range
+![image](https://github.com/zorem/customizer-framework/assets/69037744/a63bcbc0-1c59-4c09-b47d-af7623b05d1e)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Range Control', 'text-domian' ),
+	'type'     => 'range',
+	'show'     => true,
+	'option_name'=> 'unique_id',
+	'option_type' => 'array',	
+	'default' => !empty(value) ? value : '10',
+	'min' => "0",
+	'max' => "30",
+	'unit' => "px"
+),</code></pre>
+
+### Daterange
+![image](https://github.com/zorem/customizer-framework/assets/69037744/fb403bd7-d51b-4f17-948d-272fd375381b)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Daterange Control', 'text-domian' ),
+	'type'     => 'daterange',
+	'show'     => true,
+	'option_name'=> 'unique_id',
+	'option_type' => 'array',	
+	'default' => !empty(value) ? value : array(),
+	
 ),</code></pre>
