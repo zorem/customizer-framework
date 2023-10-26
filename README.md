@@ -31,8 +31,7 @@ Once downloaded, unzip the zip file, and you will find the 'customizer' folder. 
 
 After adding the necessary files to your plugin, you should include the following code in the main plugin file to enable the customizer functionality:
 
-<pre><code>
-//Hooks
+<pre><code>//Hooks
 add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
 
 /*
@@ -56,24 +55,22 @@ public function get_plugin_path() {
 	}
 	$this->plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
 	return $this->plugin_path;
-}
-</code></pre>
+}</code></pre>
 
-By including this code in your main plugin file, you ensure that the customizer functionality is integrated into your plugin. This allows you to utilize the features provided by the 'customizer-admin.php' file located in the 'customizer' folder you added to your plugin directory.
+By including this code in your main plugin file, you ensure that the customizer functionality is integrated into your plugin. This allows you to utilize the features provided by the `customizer-admin.php` file located in the `customizer` folder you added to your plugin directory.
 
 ## Configuration
 Locate the customizer configuration file in your plugin folder. You can find it at `your-plugin-folder/customizer/customizer-admin.php`. Open this PHP file in your plugin directory, as it contains all the controls and basic configuration settings.
 
 Within the `customizer-admin.php` file, you'll need to make a couple of changes to customize it for your specific admin page:
 
-<pre><code>private static $screen_id = 'customizer_framework';<br>
-private static $screen_title = 'Customizer Framework';</code></pre>
+- `private static $screen_id = 'customizer_framework';`<br>
+- `private static $screen_title = 'Customizer Framework';`
 
 Replace `customizer_framework` and `Customizer Framework` with your desired admin page ID and customizer title.
 
 Next, you should set the following localized script parameters according to your requirements:
-<pre><code>
-wp_localize_script( self::$screen_id, self::$screen_id, array(
+<pre><code>wp_localize_script( self::$screen_id, self::$screen_id, array(
 	'main_title'	=> self::$screen_title,		// Customizer main title
 	'admin_email' => get_option('admin_email'),	// Admin email address
 	'send_test_email_btn' => true,		// Show/Hide a send test email button in framework
@@ -81,8 +78,7 @@ wp_localize_script( self::$screen_id, self::$screen_id, array(
 	'back_to_wordpress_link' => admin_url(),	// redirect after close customizer framework
 	'rest_nonce'	=> wp_create_nonce('wp_rest'),	// Nonce for security perpose
 	'rest_base'	=> esc_url_raw( rest_url() ),	// Rest base URL for API
-));
-</code></pre>
+));</code></pre>
 
 These settings allow you to customize various aspects of your customizer framework, such as the main title, admin email address, the presence of a test email button, iframe URLs, redirection link, and security features.
 
@@ -98,6 +94,9 @@ By following these steps, you can configure the Customizer Framework to suit you
 
 ## Panels and Controls
 Panels serve as containers for grouping multiple sections together in the Customizer framework. Let's explore how to create panels in the Customizer and the arguments required when registering them.
+
+> [!NOTE]
+> When you registering them you need to pass all controls code inside setting variable in filter hook and return it.
 
 ### Creating Panels:
 To create panels, you need to provide arguments such as the panel ID, title, and type when registering them. Here's how you can do it:
@@ -140,4 +139,117 @@ In summary, panels are used to group sections together in the Customizer, and su
 
 ## Adding Controls
 
+To create controls, it is essential to supply various arguments during their registration. These arguments include specifying the parent panel or sub-panel ID, title, default value, placeholder, visibility, option name, option type, option key, and the control type.
 
+**Required Arguments:**
+
+- `parent` : This argument refers to the parent panel or sub-panel ID to which the control belongs. It typically points to the ID of the panel to which the control is attached.
+- `show` : Use the value 'true' to indicate that the field should be displayed.
+- `option_type` : Set this to 'array' if you want to store the option value in an array with a key based on the ID.
+- `unique_key` : The unique key is employed to store the option value when the `option_name` and `option_key` arguments are not provided.
+- `default` : Use the value to set default when  user come first time on customizer.
+- `type` : This argument refers to the type of field or option
+
+**Optional Arguments:**
+
+- `option_name` : Optionally, you can provide a unique ID to store the option value under this specific ID.
+- `option_key` : This is used to specify the key under which the option value will be stored in an array associated with the unique ID.
+- `refresh` : If set to 'true', it indicates that the iframe in the preview should be refreshed when there is a change.
+- `placeholder` : The "placeholder" parameter is a providing context and guidance for data entry.
+- `class` : The "class" parameter will add a class in options.
+- `desc` : This is used to add description text under the options.
+
+> [!NOTE]
+> When you registering them you need to pass all controls code inside setting variable in filter hook and return it.
+
+### Text
+![image](https://github.com/zorem/customizer-framework/assets/69037744/65b3ff17-9e14-4cdd-9865-e8b0a388e06f)
+
+The `Text` controls allow you to add a simple, single-line text input.
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Text Control', 'text-domian' ),
+	'default'  => !empty('value') ? 'value' : 'defualt value', 
+	'type'     => 'text',
+	'show'     => true,
+	'option_name' => 'unique_id',
+	'option_type' => 'array',
+),</code></pre>
+
+### Textarea
+![image](https://github.com/zorem/customizer-framework/assets/69037744/38c73f12-9c99-4478-9383-0382bcafee97)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Textarea Control', 'text-domian' ),
+	'default'  => !empty('value') ? 'value' : 'defualt value', 
+	'type'     => 'Textarea',
+	'show'     => true,
+	'option_name' => 'unique_id',
+	'option_type' => 'array',
+),</code></pre>
+
+### Select
+![image](https://github.com/zorem/customizer-framework/assets/69037744/e4d3940a-3209-49c1-b257-d7317400722e)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Select Control', 'text-domian' ),
+	'type'     => 'select',
+	'default'  => !empty('value') ? 'value' : 'key1',
+	'show'     => true,
+	'options'  => array(
+		'key1' => 'Option 1',
+		'key2' => 'Option 2',
+		'key3' => 'Option 3',
+	),
+	'option_name' => 'unique_id',
+	'option_type' => 'array',
+),</code></pre>
+
+### Toggle
+![image](https://github.com/zorem/customizer-framework/assets/69037744/dae878ce-8477-4a82-af2b-d36ad823a0a8)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Toggle Control', 'text-domian' ),
+	'default'  => !empty(value) && 'no' == value ? 0 : 1,
+	'type'     => 'tgl-btn',
+	'show'     => true,
+	'option_name'=> 'unique_id',
+	'option_type'=> 'array',
+),</code></pre>
+
+
+### Checkbox
+![image](https://github.com/zorem/customizer-framework/assets/69037744/8a3da748-19db-4925-941a-5ccef7931681)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Checkbox Control', 'text-domian' ),
+	'default'  => !empty(value) ? value : 1,
+	'type'     => 'checkbox',
+	'show'     => true,
+	'option_name'=> 'unique_id',
+	'option_type'=> 'array',
+),</code></pre>
+
+### Color
+![image](https://github.com/zorem/customizer-framework/assets/69037744/f6d19d5a-afd7-4e84-bdb8-9386f6d18dd8)
+
+**Example**
+<pre><code>'unique_key' => array(
+	'parent'=> 'panel_id',
+	'title'    => esc_html__( 'Color control', 'text-domian' ),
+	'default'  => !empty(value) ? value : #000,
+	'type'     => 'checkbox',
+	'show'     => true,
+	'option_name'=> 'unique_id',
+	'option_type'=> 'array',
+),</code></pre>
