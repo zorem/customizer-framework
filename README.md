@@ -15,67 +15,64 @@ You can simply copy the files in your plugin and then include the main plugin fi
 Go to the Github and download the zip file OR clone the repository from Git.
 
 ### where its located in Git
-<code>git clone https://github.com/kuldip-navadiya/customizer-framework.git  // Clone this repo into your own directory.</code>
-After, clone this repo into your own directory and you will see in directory <code>customizer</code> folder in your plugin folder is created.
+<pre><code>git clone https://github.com/kuldip-navadiya/customizer-framework.git  // Clone this repo into your own directory.</code></pre>
+After, clone this repo into your own directory and you will see in directory `customizer` folder in your plugin folder is created.
 <p><strong>OR</strong></p>
-<code>https://github.com/kuldip-navadiya/customizer-framework/archive/refs/heads/main.zip // Download this repo from the link.</code>
+<pre><code>https://github.com/kuldip-navadiya/customizer-framework/archive/refs/heads/main.zip // Download this repo from the link.</code></pre>
 
-After, Download this repo from the link. you need to unzip this zip file and copy the <code>customizer</code> folder in your plugin.
+After, Download this repo from the link. you need to unzip this zip file and copy the `customizer` folder in your plugin.
 
 Then, Add the following code to include in the main plugin file of your plugin's.
-
 <pre><code>
-  //Hooks
-  add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
+//Hooks
+add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
 
-  /*
-  * include file on plugin load
-  */
-  public function on_plugins_loaded() {
-    // customizer
-    require_once $this->get_plugin_path() . '/customizer/customizer-admin.php';	
-    $this->customizer = Customizer_Admin::get_instance();
-  }
-
-  /**
-  * Gets the absolute plugin path without a trailing slash, e.g.
-  * /path/to/wp-content/plugins/plugin-directory.
-  *
-  * @return string plugin path
-  */
-  public function get_plugin_path() {
-    if ( isset( $this->plugin_path ) ) {
-      return $this->plugin_path;
-    }
-
-    $this->plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
-    return $this->plugin_path;
-  }
+/*
+* include file on plugin load
+*/
+public function on_plugins_loaded() {
+	// customizer
+	require_once $this->get_plugin_path() . '/customizer/customizer-admin.php';	
+	$this->customizer = Customizer_Admin::get_instance();
+}
+	
+/**
+* Gets the absolute plugin path without a trailing slash, e.g.
+* /path/to/wp-content/plugins/plugin-directory.
+*
+* @return string plugin path
+*/
+public function get_plugin_path() {
+	if ( isset( $this->plugin_path ) ) {
+		return $this->plugin_path;
+	}
+	$this->plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
+	return $this->plugin_path;
+}
 </code></pre>
 
 ## Configuration
-To configure customizer framework, we're going to path <code>your-pluign-folder/customizer/customizer-admin.php</code> and open PHP-file in your plugin. This file will contain all the controls and the basic configuration.
+To configure customizer framework, we're going to path `your-pluign-folder/customizer/customizer-admin.php` and open PHP-file in your plugin. This file will contain all the controls and the basic configuration.
 
-After, Open <code>customizer-admin.php</code> file and chnage <code>$screen_id</code> and <code>$screen_title</code> as per your admin page.
+After, Open `customizer-admin.php` file and chnage `$screen_id` and `$screen_title` as per your admin page.
 
-<code>private static $screen_id = 'customizer_framework'; // Enter your admin page id</code><br>
-<code>private static $screen_title = 'Customizer Framework'; // Enter your customizer title</code>
+<pre><code>private static $screen_id = 'customizer_framework'; // Enter your admin page id</code></pre><br>
+<pre><code>private static $screen_title = 'Customizer Framework'; // Enter your customizer title</code></pre>
 
 Then, please set below localize script parameter as per requirment
 <pre><code>
-	wp_localize_script( self::$screen_id, self::$screen_id, array(
-		'main_title'	=> self::$screen_title,		// Customizer main title
-		'admin_email' => get_option('admin_email'),	// Admin email address
-		'send_test_email_btn' => true,		// Show/Hide a send test email button in framework
-		'iframeUrl'	=> array('processing' => admin_url('admin-ajax.php?action=' . self::$screen_id . '_email_preview&preview=processing',)	// Preview irameURL as order status and preview id
-		'back_to_wordpress_link' => admin_url(),	// redirect after close customizer framework
-		'rest_nonce'	=> wp_create_nonce('wp_rest'),	// Nonce for security perpose
-		'rest_base'	=> esc_url_raw( rest_url() ),	// Rest base URL for API
-	));
+wp_localize_script( self::$screen_id, self::$screen_id, array(
+	'main_title'	=> self::$screen_title,		// Customizer main title
+	'admin_email' => get_option('admin_email'),	// Admin email address
+	'send_test_email_btn' => true,		// Show/Hide a send test email button in framework
+	'iframeUrl'	=> array('processing' => admin_url('admin-ajax.php?action=' . self::$screen_id . '_email_preview&preview=processing',)	// Preview irameURL as order status and preview id
+	'back_to_wordpress_link' => admin_url(),	// redirect after close customizer framework
+	'rest_nonce'	=> wp_create_nonce('wp_rest'),	// Nonce for security perpose
+	'rest_base'	=> esc_url_raw( rest_url() ),	// Rest base URL for API
+));
 </code></pre>
 
 Then, Use filter hooks to add controls and preview.
-
 <pre><code>
 // hooks for return settings options
 apply_filters(  self::$screen_id . '_email_options' , $settings = array(), $preview );	// Parameter $setting and $preview = 'preview id'
@@ -85,5 +82,42 @@ apply_filters( self::$screen_id . '_preview_content' , $preview );	// Parameter 
 </code></pre>
 
 ## Panels and Controls
+Panels are wrappers for sections – a way to group multiple sections together. To see how to create Panels using the Customizer framework.
+
+All arguments such as title, type should be passed directly when registering a panels.
+
+> *Arguments:*<br>
+	- **panel1** - the *panel1* as panel ID<br>
+	- **Title:** - the *title* as Panel name<br>
+	- **Type:** - the *type* as panel type(like: panel, sub-panel)
+
+Adding Panels in customizer:
+<pre><code>
+//panels
+'panel1' => array(
+	'title'	=> esc_html__( 'Panel 1', 'text-domian' ),
+	'type'	=> 'panel',
+),
+</code></pre>
+
+Sub Panels are wrappers for sections – a way to group multiple sections together. To see how to create Sub Panels using the Customizer framework.
+
+All arguments such as title, type and parent should be passed directly when registering a sub panels.
+
+> *Arguments:*<br>
+	- **sub-panel1** - the *sub-panel1* as sub panel ID<br>
+	- **Title:** - the *title* as Panel name<br>
+	- **Type:** - the *type* as panel type(like: panel, sub-panel)<br>
+	- **parent:** - the *parent* as panel ID(like: panel1)
+
+Adding Sub Panels in customizer:
+<pre><code>
+//sub-panels
+'sub-panel1' => array(
+	'title'		=> esc_html__( 'Sub Panel 1', 'text-domian' ),
+	'type'		=> 'sub-panel',
+	'parent'	=> 'panel1',
+),
+</code></pre>
 
 ## Adding Controls
