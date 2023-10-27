@@ -106,7 +106,7 @@ To add header controls, you need to provide arguments such as the title, preview
 - `show` : Use the value 'true' to indicate that the field should be displayed.
 - `option_type` : Set this to 'array' if you want to store the option value in an array with a key based on the ID.
 - `unique_key` : The unique key is employed to store the option value when the `option_name` and `option_key` arguments are not provided.
-- `default` : Use the value to set default when  user come first time on customizer.
+- `default` : Use the store value to set default when user come first time on customizer.
 - `type` : This argument refers to the type of field or option
 
 <pre><code>//Header Controls
@@ -119,17 +119,7 @@ To add header controls, you need to provide arguments such as the title, preview
 	'show'     => true,
 	'previewType' => true,
 	'nav' => 'header',
-	'default'  => $preview ? $preview : '',
-),
-'email_enable' => array(
-	'title'    => esc_html__( 'Enable email', 'text-domian' ),
-	'type'     => 'tgl-btn',
-	'show'		=> true,
-	'nav' => 'header',
-	'option_name' => 'unique_id',
-	'option_type' => 'array',
-	'default'	=> !empty(value) ? value : 1,
-	'class'	=> 'align-right',
+	'default'  => !empty(value) ? value : 'preview1',
 ),
 </code></pre>
 
