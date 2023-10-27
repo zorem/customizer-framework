@@ -142,6 +142,7 @@ To create panels, you need to provide arguments such as the panel ID, title, and
 - `panel_id` : The unique identifier for the panel.<br>
 - `Title` : The display name of the panel.<br>
 - `Type` : The type of the panel, which can be either "panel" or "sub-panel."
+- `preview` : Use the value 'preview id' to open the preview the relevant panel.
 
 Here's an example of adding panels in the Customizer:
 <pre><code>//panels
@@ -160,6 +161,7 @@ Sub-panels, on the other hand, are wrappers for grouping multiple sections withi
 - `Title` : The display name of the sub-panel.<br>
 - `Type` : The type of the sub-panel, which can be "panel" or "sub-panel."<br>
 - `parent` : The parent panel ID to which the sub-panel belongs, typically referencing a panel's ID.
+- `preview` : Use the value 'preview id' to open the preview the relevant panel.
 
 Here's an example of adding sub-panels in the Customizer:
 <pre><code>//sub-panels
