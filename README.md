@@ -71,12 +71,18 @@ Within the `customizer-admin.php` file, you'll need to make a couple of changes 
 Replace `customizer_framework` and `Customizer Framework` with your desired admin page ID and customizer title.
 
 Next, you should set the following localized script parameters according to your requirements:
+
+**Parameters:**<br>
+- `send_test_email_btn` : Use the value 'true' to show/hide a send test button and allow to send test email.<br>
+- `iframeUrl` : The array of preview URLs. so, set all preview URLs as per your order status and preview id.<br>
+- `back_to_wordpress_link` : Use the link to redirect after close customizer."
+
 <pre><code>wp_localize_script( self::$screen_id, self::$screen_id, array(
 	'main_title'	=> self::$screen_title,		// Customizer main title
 	'admin_email' => get_option('admin_email'),	// Admin email address
-	'send_test_email_btn' => true,		// Show/Hide a send test email button in framework
-	'iframeUrl'	=> array('processing' => admin_url('admin-ajax.php?action=' . self::$screen_id . '_email_preview&preview=processing',)	// Preview irameURL as order status and preview id
-	'back_to_wordpress_link' => admin_url(),	// redirect after close customizer framework
+	'send_test_email_btn' => true,
+	'iframeUrl'	=> array('processing' => admin_url('admin-ajax.php?action=' . self::$screen_id . '_email_preview&preview=processing'),
+	'back_to_wordpress_link' => admin_url(),
 	'rest_nonce'	=> wp_create_nonce('wp_rest'),	// Nonce for security perpose
 	'rest_base'	=> esc_url_raw( rest_url() ),	// Rest base URL for API
 ));</code></pre>
