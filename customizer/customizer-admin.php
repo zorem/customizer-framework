@@ -82,7 +82,7 @@ class React_Customizer_Admin {
 		add_action( 'admin_menu', array( $this, 'register_woocommerce_menu' ), 99 );
 
 		add_action('rest_api_init', array( $this, 'route_api_functions' ) );
-						
+
 		add_action('admin_enqueue_scripts', array( $this, 'customizer_enqueue_scripts' ) );
 
 		add_action('admin_footer', array( $this, 'admin_footer_enqueue_scripts' ) );
