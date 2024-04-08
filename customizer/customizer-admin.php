@@ -124,7 +124,7 @@ class React_Customizer_Admin {
 	 * WC sub menu 
 	*/
 	public function admin_footer_enqueue_scripts() {
-		//echo '<style type="text/css">#toplevel_page_'. self::$screen_id .' { display: none !important; }</style>';
+		echo '<style type="text/css">#toplevel_page_'. self::$screen_id .' { display: none !important; }</style>';
 	}
 	
 	/*
@@ -141,13 +141,24 @@ class React_Customizer_Admin {
 		if ( self::$screen_id == $page ) {
 			// Add the WP Media 
 			wp_enqueue_media();
-			
-			wp_enqueue_script( self::$screen_id, plugin_dir_url(__FILE__) . 'dist/main.js', ['jquery', 'wp-util', 'wp-color-picker'], time(), true);
+
+			wp_enqueue_script( self::$screen_id, plugin_dir_url(__FILE__) . 'dist/main.js', ['jquery', 'wp-util', 'wp-color-picker', 'wp-i18n'], time(), true);
 			wp_localize_script( self::$screen_id, self::$screen_id, array(
 				'main_title'	=> self::$screen_title,
 				'text_domain'	=> self::$text_domain,
 				'admin_email' => get_option('admin_email'),
 				'send_test_email_btn' => true,
+				'translations' => array(
+					esc_html__( 'Save', 'react-customizer-framework' ),
+					esc_html__( 'You are customizing', 'react-customizer-framework' ),
+					esc_html__( 'Customizing', 'react-customizer-framework' ),
+					esc_html__( 'Send Test Email', 'react-customizer-framework' ),
+					esc_html__( 'Send a test email', 'react-customizer-framework' ),
+					esc_html__( 'Enter Email addresses (comma separated)', 'react-customizer-framework' ),
+					esc_html__( 'Send', 'react-customizer-framework' ),
+					esc_html__( 'Settings Successfully Saved.', 'react-customizer-framework' ),
+					esc_html__( 'Please save the changes to send test email.', 'react-customizer-framework' )
+				),
 				'iframeUrl'	=> array(
 					'new_order'					=> admin_url('admin-ajax.php?action=' . self::$screen_id . '_email_preview&preview=new_order'),
 					'cancelled_order'			=> admin_url('admin-ajax.php?action=' . self::$screen_id . '_email_preview&preview=cancelled_order'),
@@ -180,12 +191,6 @@ class React_Customizer_Admin {
 			'permission_callback' => '__return_true',
 		));
 
-		/*register_rest_route( self::$screen_id, 'preview', array(
-			'methods'  => 'GET',
-			'callback' => [$this, 'return_json_sucess_preview_route_api'],
-			'permission_callback' => '__return_true',
-		));*/
-
 		register_rest_route( self::$screen_id, 'store/update',array(
 			'methods'				=> 'POST',
 			'callback'				=> [$this, 'update_store_settings'],
@@ -216,14 +221,6 @@ class React_Customizer_Admin {
 		return $settings; 
 
 	}
-
-	/*
-	 * Preview API 
-	*/
-	/*public function return_json_sucess_preview_route_api($request) {
-		$preview = !empty($request->get_param('preview')) ? $request->get_param('preview') : '';
-		return wp_send_json_success($this->get_preview_email($preview));
-	}*/
 
 	public function get_preview_func() {
 		$preview = isset($_GET['preview']) ? $_GET['preview'] : '';
@@ -346,7 +343,7 @@ class React_Customizer_Admin {
 			
 			//panels
 			'email_content'	=> array(
-				'title'	=> esc_html__( 'Email Content', self::$text_domain ),
+				'title'	=> esc_html__( 'Email Content', 'react-customizer-framework' ),
 				'type'	=> 'panel',
 			),
 			'email_design'	=> array(
@@ -842,7 +839,7 @@ class React_Customizer_Admin {
 	}
 	
 	public function safe_style_css( $styles ) {
-		 $styles[] = 'display';
+		$styles[] = 'display';
 		return $styles;
 	}
 
