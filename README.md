@@ -74,7 +74,8 @@ Next, you should set the following localized script parameters according to your
 
 **Parameters:**<br>
 - `send_test_email_btn` : Use the value 'true' to show/hide a send test button and allow to send test email.<br>
-- `iframeUrl` : The array of preview URLs. so, set all preview URLs as per your order status and preview id.<br>
+- `iframeUrl` : This is an array of preview URLs. Please set each preview URL according to your order status and preview ID.<br>
+- `translations` : This is an array of translation strings. Please replace 'text-domain' with your plugin's text domain.<br>
 - `back_to_wordpress_link` : Use the link to redirect after close customizer."
 
 <pre><code>wp_localize_script( self::$screen_id, self::$screen_id, array(
@@ -82,6 +83,17 @@ Next, you should set the following localized script parameters according to your
 	'admin_email' => get_option('admin_email'),	// Admin email address
 	'send_test_email_btn' => true,
 	'iframeUrl'	=> array('processing' => admin_url('admin-ajax.php?action=' . self::$screen_id . '_email_preview&preview=processing'),
+	'translations' => array(
+		esc_html__( 'Save', 'text-domain' ),
+		esc_html__( 'You are customizing', 'text-domain' ),
+		esc_html__( 'Customizing', 'text-domain' ),
+		esc_html__( 'Send Test Email', 'text-domain' ),
+		esc_html__( 'Send a test email', 'text-domain' ),
+		esc_html__( 'Enter Email addresses (comma separated)', 'text-domain' ),
+		esc_html__( 'Send', 'text-domain' ),
+		esc_html__( 'Settings Successfully Saved.', 'text-domain' ),
+		esc_html__( 'Please save the changes to send test email.', 'text-domain' )
+	),
 	'back_to_wordpress_link' => admin_url(),
 	'rest_nonce'	=> wp_create_nonce('wp_rest'),	// Nonce for security perpose
 	'rest_base'	=> esc_url_raw( rest_url() ),	// Rest base URL for API
